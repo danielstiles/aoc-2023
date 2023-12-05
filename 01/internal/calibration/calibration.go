@@ -1,6 +1,6 @@
 package calibration
 
-func GetCalibration(line []byte) int {
+func GetCalibration(line string) int {
 	out := 0
 	var first, last bool
 	l := len(line)

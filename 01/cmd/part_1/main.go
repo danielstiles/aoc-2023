@@ -13,13 +13,13 @@ func main() {
 	filename := os.Args[1]
 	file, err := os.Open(filename)
 	if err != nil {
-		slog.Error(slog.Any("error", err))
+		slog.Error("Could not read file", slog.Any("error", err))
 	}
 	fileScanner := bufio.NewScanner(file)
 	fileScanner.Split(bufio.ScanLines)
 	total := 0
 	for fileScanner.Scan() {
-		total += calibration.GetCalibration(fileScanner.Bytes())
+		total += calibration.GetCalibration(fileScanner.Text())
 	}
-
+	slog.Info("Answer", slog.Int("total", total))
 }
