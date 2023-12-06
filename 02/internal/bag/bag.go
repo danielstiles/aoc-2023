@@ -8,12 +8,12 @@ import (
 )
 
 var maxPick = map[string]int{
-	"Red":   12,
-	"Green": 13,
-	"Blue":  14,
+	"red":   12,
+	"green": 13,
+	"blue":  14,
 }
 
-var gameExpr, drawExpr, pickExpr *regexp.Regexp
+var gameExpr, pickExpr *regexp.Regexp
 
 func CheckGame(line string) int {
 	if gameExpr == nil {
@@ -24,34 +24,46 @@ func CheckGame(line string) int {
 	if err != nil {
 		slog.Error("Bad game number", slog.Any("error", err))
 	}
-	for i, draw := range parts[2:] {
-		if i > 0 {
-			draw = draw[2:]
+	picks := pickExpr.FindAllStringSubmatch(line, -1)
+	for _, pick := range picks {
+		n, err := strconv.Atoi(pick[1])
+		if err != nil {
+			slog.Error("Bad pick number", slog.Any("error", err))
 		}
-		picks := drawExpr.FindStringSubmatch(draw)
-		for j, pick := range picks[1:] {
-			if j > 0 {
-				pick = pick[2:]
-			}
-			if !checkPick(pick) {
-				return 0
-			}
+		if !checkPick(n, pick[2]) {
+			return 0
 		}
 	}
 	return game
 }
 
-func buildRegex() {
-	gameExpr = regexp.MustCompile("^Game (\\d+): ([^;]+)(; [^;]+)*$")
-	drawExpr = regexp.MustCompile("^(\\d+ \\w+)(, \\d+ \\w+)*$")
-	pickExpr = regexp.MustCompile("^(\\d+) (Red|Green|Blue)$")
+func GetPower(line string) int {
+	if gameExpr == nil {
+		buildRegex()
+	}
+	var required = map[string]int{
+		"red":   0,
+		"green": 0,
+		"blue":  0,
+	}
+	picks := pickExpr.FindAllStringSubmatch(line, -1)
+	for _, pick := range picks {
+		n, err := strconv.Atoi(pick[1])
+		if err != nil {
+			slog.Error("Bad pick number", slog.Any("error", err))
+		}
+		if required[pick[2]] < n {
+			required[pick[2]] = n
+		}
+	}
+	return required["red"] * required["green"] * required["blue"]
 }
 
-func checkPick(pick string) bool {
-	parts := pickExpr.FindStringSubmatch(pick)
-	num, err := strconv.Atoi(parts[1])
-	if err != nil {
-		slog.Error("Bad pick number", slog.Any("error", err))
-	}
-	return num <= maxPick[parts[2]]
+func buildRegex() {
+	gameExpr = regexp.MustCompile("^Game (\\d+)")
+	pickExpr = regexp.MustCompile("(\\d+) (red|green|blue)")
+}
+
+func checkPick(num int, color string) bool {
+	return num <= maxPick[color]
 }
