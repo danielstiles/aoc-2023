@@ -18,16 +18,13 @@ func main() {
 	fileScanner := bufio.NewScanner(file)
 	fileScanner.Split(bufio.ScanLines)
 	total := 0
-	var prevIndices, curIndices, nextIndices []int
-	var curLine, nextLine string
+	var prevLine, curLine, nextLine string
 	for fileScanner.Scan() {
-		prevIndices = curIndices
+		prevLine = curLine
 		curLine = nextLine
-		curIndices = nextIndices
 		nextLine = fileScanner.Text()
-		nextIndices = engine.GetIndices(nextLine)
-		total += engine.GetPartTotal(curLine, prevIndices, curIndices, nextIndices)
+		total += engine.GetPartTotal(curLine, prevLine, curLine, nextLine)
 	}
-	total += engine.GetPartTotal(nextLine, curIndices, nextIndices)
+	total += engine.GetPartTotal(nextLine, curLine, nextLine)
 	slog.Info("Answer", slog.Int("total", total))
 }

@@ -21,10 +21,10 @@ func GetIndices(line string) []int {
 	return indices
 }
 
-func GetPartTotal(line string, indexSets ...[]int) int {
+func GetPartTotal(line string, neighbors ...string) int {
 	var total int
 	var indices []int
-	indices = mergeIndices(indexSets...)
+	indices = getIndices(neighbors...)
 	numbers := numExpr.FindAllStringIndex(line, -1)
 	if numbers == nil {
 		return 0
@@ -44,10 +44,11 @@ func GetPartTotal(line string, indexSets ...[]int) int {
 	return total
 }
 
-func mergeIndices(from ...[]int) []int {
+func getIndices(from ...string) []int {
 	var into []int
-	for _, m := range from {
-		for _, i := range m {
+	for _, s := range from {
+		indices := GetIndices(s)
+		for _, i := range indices {
 			into = append(into, i)
 		}
 	}
