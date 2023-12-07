@@ -18,7 +18,7 @@ func main() {
 	fileScanner := bufio.NewScanner(file)
 	fileScanner.Split(bufio.ScanLines)
 	total := 0
-	var prevIndices, curIndices, nextIndices map[int]struct{}
+	var prevIndices, curIndices, nextIndices []int
 	var curLine, nextLine string
 	for fileScanner.Scan() {
 		prevIndices = curIndices
