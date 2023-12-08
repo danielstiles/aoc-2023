@@ -17,13 +17,10 @@ func main() {
 	}
 	fileScanner := bufio.NewScanner(file)
 	fileScanner.Split(bufio.ScanLines)
-	product := 1
 	fileScanner.Scan()
-	times := race.GetNums(fileScanner.Text())
+	time := race.GetNum(fileScanner.Text())
 	fileScanner.Scan()
-	distances := race.GetNums(fileScanner.Text())
-	for i := range times {
-		product *= race.GetRange(times[i], distances[i])
-	}
+	distance := race.GetNum(fileScanner.Text())
+	product := race.GetRange(time, distance)
 	slog.Info("Answer", slog.Int("product", product))
 }

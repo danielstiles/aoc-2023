@@ -17,9 +17,18 @@ func GetNums(line string) []int {
 	return nums
 }
 
+func GetNum(line string) int {
+	var num string
+	for _, s := range numExpr.FindAllString(line, -1) {
+		num += s
+	}
+	n, _ := strconv.Atoi(num)
+	return n
+}
+
 func GetRange(time, distance int) int {
 	interval := math.Sqrt(float64(time*time - 4*distance))
-	base := int(math.Floor(interval))
+	base := int(math.Ceil(interval))
 	if time%2 == 0 {
 		if base%2 == 0 {
 			return base - 1
