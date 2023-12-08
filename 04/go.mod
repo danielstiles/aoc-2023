@@ -1,4 +1,4 @@
-module github.com/danielstiles/aoc-2023/03
+module github.com/danielstiles/aoc-2023/04
 
 go 1.20
 
