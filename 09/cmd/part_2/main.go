@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"os"
 
+	"golang.org/x/exp/slices"
 	"golang.org/x/exp/slog"
 
 	"github.com/danielstiles/aoc-2023/09/internal/oasis"
@@ -21,6 +22,7 @@ func main() {
 	for fileScanner.Scan() {
 		line := fileScanner.Text()
 		history := oasis.ParseHistory(line)
+		slices.Reverse(history)
 		total += oasis.GetNext(history)
 	}
 	slog.Info("Answer", slog.Int("total", total))

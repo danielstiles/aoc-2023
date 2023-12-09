@@ -5,10 +5,10 @@ import (
 	"strconv"
 )
 
-var numExpr = regexp.MustCompile("\\d+")
+var numExpr = regexp.MustCompile("-?\\d+")
 
 func ParseHistory(line string) []int {
-	matches := numExpr.FindAllString(line)
+	matches := numExpr.FindAllString(line, -1)
 	var nums []int
 	for _, s := range matches {
 		n, _ := strconv.Atoi(s)
