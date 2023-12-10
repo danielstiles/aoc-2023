@@ -3,8 +3,7 @@ package main
 import (
 	"bufio"
 	"os"
-
-	"golang.org/x/exp/slog"
+	"log/slog"
 )
 
 func main() {
