@@ -1,7 +1,5 @@
 package pipes
 
-import "golang.org/x/exp/slog"
-
 const (
 	up         = 1
 	left       = 2
@@ -85,20 +83,11 @@ func (a *Area) CalcPath() int {
 func (a *Area) GetInteriorCount() int {
 	var count int
 	for _, row := range a.Tiles {
-		rowStr := ""
 		for _, val := range row {
-			if (val & path) == 0 {
-				if (val & interior) != 0 {
-					count += 1
-					rowStr += "1"
-				} else {
-					rowStr += "0"
-				}
-			} else {
-				rowStr += "P"
+			if (val&path) == 0 && (val&interior) != 0 {
+				count += 1
 			}
 		}
-		slog.Info("map", slog.String("row", rowStr))
 	}
 	return count
 }
