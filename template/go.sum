@@ -1,0 +1,4 @@
+github.com/danielstiles/aoc-2023/10 v0.0.0-20231210131610-de3ec4bf1034 h1:4nt4S3IDm9cW53QxiNJMHcaMAj9sn91Rkz0ebuTRrHU=
+github.com/danielstiles/aoc-2023/10 v0.0.0-20231210131610-de3ec4bf1034/go.mod h1:2Dx2N0Obc5P3Dr3qsf31xCW1PlBlZ4izpKxDMdQ3MGk=
+golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb h1:c0vyKkb6yr3KR7jEfJaOSv4lG7xPkbN6r52aJz1d8a8=
+golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb/go.mod h1:iRJReGqOEeBhDZGkGbynYwcHlctCvnjTYIamk7uXpHI=
