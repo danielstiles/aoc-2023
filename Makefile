@@ -1,6 +1,8 @@
+YEAR?=2023
 DAY?='template'
 
 new_day:
 	mkdir -p $(DAY)
 	git config --get remote.origin.url | sed 's/^.*\(github.*\).git/module \1\/$(DAY)\n\ngo 1.20\n/' > $(DAY)/go.mod
 	cp -R template/* $(DAY)/
+	curl https://adventofcode.com/$(YEAR)/day/$(DAY)/input -H "Cookie: $(shell cat cookie)" > $(DAY)/input.txt
