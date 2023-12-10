@@ -2,8 +2,8 @@ package main
 
 import (
 	"bufio"
-	"os"
 	"log/slog"
+	"os"
 )
 
 func main() {
