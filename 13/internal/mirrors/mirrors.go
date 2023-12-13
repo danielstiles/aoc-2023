@@ -25,33 +25,36 @@ func ParseLine(line []byte) []int {
 	return ret
 }
 
-func FindReflection(grid [][]int) int {
+func FindReflection(grid [][]int, smudge bool) int {
 	if len(grid) == 0 {
 		return 0
 	}
 	for i := 1; i < len(grid[0]); i++ {
-		if checkColReflection(grid, i) {
+		differences := checkColReflection(grid, i)
+		if !smudge && differences == 0 || smudge && differences == 1 {
 			return i * colMult
 		}
 	}
 	for i := 1; i < len(grid); i++ {
-		if checkRowReflection(grid, i) {
+		differences := checkRowReflection(grid, i)
+		if !smudge && differences == 0 || smudge && differences == 1 {
 			return i * rowMult
 		}
 	}
 	return 0
 }
 
-func compare(a, b []int) bool {
+func compare(a, b []int) int {
 	if len(a) != len(b) {
-		return false
+		return -1
 	}
+	var differences int
 	for i := range a {
 		if a[i] != b[i] {
-			return false
+			differences += 1
 		}
 	}
-	return true
+	return differences
 }
 
 func getCol(grid [][]int, i int) []int {
@@ -62,28 +65,26 @@ func getCol(grid [][]int, i int) []int {
 	return col
 }
 
-func checkColReflection(grid [][]int, col int) bool {
+func checkColReflection(grid [][]int, col int) int {
+	var differences int
 	for i := 0; i < col; i++ {
 		if col+i >= len(grid[0]) {
-			return true
+			return differences
 		}
-		if !compare(getCol(grid, col+i), getCol(grid, col-i-1)) {
-			return false
-		}
+		differences += compare(getCol(grid, col+i), getCol(grid, col-i-1))
 	}
-	return true
+	return differences
 }
 
-func checkRowReflection(grid [][]int, row int) bool {
+func checkRowReflection(grid [][]int, row int) int {
+	var differences int
 	for i := 0; i < row; i++ {
 		if row+i >= len(grid) {
-			return true
+			return differences
 		}
-		if !compare(grid[row+i], grid[row-i-1]) {
-			return false
-		}
+		differences += compare(grid[row+i], grid[row-i-1])
 	}
-	return true
+	return differences
 }
 
 func PrintGrid(grid [][]int) {

@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"log/slog"
 	"os"
+
+	"github.com/danielstiles/aoc-2023/13/internal/mirrors"
 )
 
 func main() {
@@ -18,5 +20,16 @@ func main() {
 	for fileScanner.Scan() {
 		lines = append(lines, fileScanner.Text())
 	}
-	slog.Info("Answer")
+	var grid [][]int
+	var total int
+	for _, line := range lines {
+		if line == "" {
+			total += mirrors.FindReflection(grid, true)
+			grid = nil
+			continue
+		}
+		grid = append(grid, mirrors.ParseLine([]byte(line)))
+	}
+	total += mirrors.FindReflection(grid, true)
+	slog.Info("Answer", slog.Int("total", total))
 }

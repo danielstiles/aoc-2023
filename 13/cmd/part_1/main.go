@@ -24,12 +24,12 @@ func main() {
 	var total int
 	for _, line := range lines {
 		if line == "" {
-			total += mirrors.FindReflection(grid)
+			total += mirrors.FindReflection(grid, false)
 			grid = nil
 			continue
 		}
 		grid = append(grid, mirrors.ParseLine([]byte(line)))
 	}
-	total += mirrors.FindReflection(grid)
+	total += mirrors.FindReflection(grid, false)
 	slog.Info("Answer", slog.Int("total", total))
 }
