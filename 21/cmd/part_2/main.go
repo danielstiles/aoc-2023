@@ -65,39 +65,22 @@ func main() {
 	total := 0
 	limit := 202300
 	for i := 0; i <= limit; i++ {
+		index := limit - i
+		if index > 3 {
+			index = index%2 + 2
+		}
 		switch i {
-		case limit:
-			total += round0[1][0]
-			total += round0[2][0]
-			total += round0[3][0]
-			total += round0[4][0]
-			total += round0[5][0] * (i - 1)
-			total += round0[6][0] * (i - 1)
-			total += round0[7][0] * (i - 1)
-			total += round0[8][0] * (i - 1)
-		case limit - 1:
-			total += round0[1][1]
-			total += round0[2][1]
-			total += round0[3][1]
-			total += round0[4][1]
-			total += round0[5][1] * (i - 1)
-			total += round0[6][1] * (i - 1)
-			total += round0[7][1] * (i - 1)
-			total += round0[8][1] * (i - 1)
 		case 0:
-			if limit%2 == 0 {
-				total += round0[0][2]
-			} else {
-				total += round0[0][3]
-			}
+			total += round0[0][index]
 		default:
-			if i%2 == limit%2 {
-				total += round0[1][2] * 4
-				total += round0[5][2] * (i - 1) * 4
-			} else {
-				total += round0[1][3] * 4
-				total += round0[5][3] * (i - 1) * 4
-			}
+			total += round0[1][index]
+			total += round0[2][index]
+			total += round0[3][index]
+			total += round0[4][index]
+			total += round0[5][index] * i
+			total += round0[6][index] * i
+			total += round0[7][index] * i
+			total += round0[8][index] * i
 		}
 	}
 
